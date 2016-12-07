@@ -1,0 +1,32 @@
+{
+  "name": "stream-counter",
+  "version": "1.0.0",
+  "description": "A library to track performance metrics for data streams",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "typings": "typings install",
+    "compile": "npm run typings && tsc",
+    "test": "npm run compile && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Roaders/stream-counter.git"
+  },
+  "keywords": [
+    "typescript",
+    "performance",
+    "stream"
+  ],
+  "author": "Giles Roadnight",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Roaders/stream-counter/issues"
+  },
+  "homepage": "https://github.com/Roaders/stream-counter#readme",
+  "devDependencies": {
+    "jasmine": "^2.5.2",
+    "typescript": "^2.1.4",
+    "typings": "^2.0.0"
+  }
+}
