@@ -6,8 +6,10 @@
   "typings": "index.d.ts",
   "scripts": {
     "typings": "typings install",
-    "compile": "npm run typings && tsc",
-    "test": "npm run compile && jasmine"
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "jasmine",
+    "prepublish": "typings install"
   },
   "repository": {
     "type": "git",

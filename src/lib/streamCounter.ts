@@ -1,25 +1,26 @@
 
 export interface IRate{
  count: number;
-  rate: number;
+ rate: number;
 }
 
 export interface IStreamInfo{
   inProgress: number;
   total: number;
   complete: number;
-  rate: IRate;
 }
 
 export interface IStreamCounter extends IStreamInfo{
   newItem();
   itemComplete();
+  rate: IRate;
 }
 
 export interface IStreamItemsTimer extends IStreamInfo{
   startItemTimer(): IItemTimer;
-  getRates(count?: number): IRate[];   
-  getAverageRate(count?: number): IRate;    
+  getRates(): IRate[];   
+  getAverageRate(count?: number): IRate;
+  getOverallRate(count?: number): IRate; 
 }
 
 export interface IItemTimer{
@@ -28,7 +29,7 @@ export interface IItemTimer{
 
 export abstract class StreamInfo implements IStreamInfo{
  
-  constructor(private progressCallback?: () => void){
+  constructor(protected _progressCallback?: () => void){
   }
 
   public get inProgress(): number {
@@ -46,6 +47,12 @@ export abstract class StreamInfo implements IStreamInfo{
   public get rate(): IRate {
     return null;
   }
+
+  protected reportProgress(){
+    if(this._progressCallback){
+      this._progressCallback();
+    }
+  }
 }
 
 export class StreamCounter extends StreamInfo implements IStreamCounter{
@@ -55,11 +62,11 @@ export class StreamCounter extends StreamInfo implements IStreamCounter{
   }
 
   public newItem(){
-
+    this.reportProgress();
   }
 
   public itemComplete(){
-
+    this._progressCallback();
   }
 }
 
@@ -70,6 +77,7 @@ export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
   }
 
   public startItemTimer(): IItemTimer{
+    this.reportProgress();
     return null;
   }
 
@@ -79,6 +87,9 @@ export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
 
   public getAverageRate(count?: number): IRate{
     return null;
-  }  
-  
+  }
+
+  public getOverallRate(count?: number): IRate{
+    return null;
+  }
 }
