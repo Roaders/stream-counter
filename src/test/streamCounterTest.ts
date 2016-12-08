@@ -41,7 +41,7 @@ abstract class StreamInfoTests{
     throw Error("get suiteName is abstract");
   }
 
-  protected getRate(): IRate{
+  protected getRate(): IRate | null{
     throw Error("get suiteName is abstract");
   }
 
@@ -245,7 +245,7 @@ class StreamCounterTests extends StreamInfoTests{
     this._streamCounter.itemComplete();
   }
 
-  protected getRate(): IRate{
+  protected getRate(): IRate | null{
     return this._streamCounter.rate;
   }
 }
@@ -277,7 +277,7 @@ class StreamItemTimerTests extends StreamInfoTests{
     throw Error("To be implemented");
   }
 
-  protected getRate(): IRate{
+  protected getRate(): IRate | null{
     return this._streamItemsTimer.getOverallRate();
   }
 
@@ -285,20 +285,20 @@ class StreamItemTimerTests extends StreamInfoTests{
     describe("item rates",() => {
       
         it("Should intially return null",() => {
-          expect(this._streamItemsTimer.getRates()).toEqual(null);
+          expect(this._streamItemsTimer.getOverallRate()).toEqual(null);
           expect(this._streamItemsTimer.getAverageRate()).toEqual(null);
         });
         
         it("after first item it should return null",() => {
           this.newItem();
-          expect(this._streamItemsTimer.getRates()).toEqual(null);
+          expect(this._streamItemsTimer.getOverallRate()).toEqual(null);
           expect(this._streamItemsTimer.getAverageRate()).toEqual(null);
         });
         
         it("after first item is complete rates should return an array of one item",() => {
           this.newItem();
           this.itemComplete();
-          expect(this._streamItemsTimer.getRates()).toEqual([{rate: 1000, count: 1}]);
+          expect(this._streamItemsTimer.getOverallRate()).toEqual([{rate: 1000, count: 1}]);
         });
         
         it("after first item is complete the average of 5 rates should return an average of 1 rate",() => {
@@ -310,7 +310,7 @@ class StreamItemTimerTests extends StreamInfoTests{
         it("after second item is complete rates should return an array of two item",() => {
           this.newItem();
           this.itemComplete();
-          expect(this._streamItemsTimer.getRates()).toEqual([{rate: 1000, count: 1},{rate: 1000, count: 1}]);
+          expect(this._streamItemsTimer.getOverallRate()).toEqual([{rate: 1000, count: 1},{rate: 1000, count: 1}]);
         });
         
         it("after second item is complete the average of 5 rates should return an average of 2 rates",() => {
