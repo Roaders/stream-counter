@@ -1,5 +1,5 @@
 {
-  "name": "stream-counter",
+  "name": "stream-item-timer",
   "version": "1.0.0",
   "description": "A library to track performance metrics for data streams",
   "main": "index.js",
