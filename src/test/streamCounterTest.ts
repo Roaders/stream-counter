@@ -12,13 +12,13 @@ abstract class StreamInfoTests{
 
         this._timerStamps = [
           1000, 2000, 
-          3200, 4400, 
-          5300, 7000, 
-          7200, 7400,
-          7600, 10000,
-          10200, 11400,
-          11600, 12800,
-          13000, 14200
+          2150, 3350, 
+          3500, 4900, 
+          5052, 6652,
+          6800, 8600,
+          8750, 10750,
+          10900, 13100,
+          13252, 15702
         ];
 
         this._timer = {
@@ -251,13 +251,13 @@ abstract class StreamInfoTests{
         expect(this.getRate()).toEqual({msPerItem: 1000, count: 1});
 
         this.startAndEndItem();
-        expect(this.getRate()).toEqual({msPerItem: 1700, count: 2});
+        expect(this.getRate()).toEqual({msPerItem: 1175, count: 2});
 
         this.startAndEndItem();
-        expect(this.getRate()).toEqual({msPerItem: 2000, count: 3});
+        expect(this.getRate()).toEqual({msPerItem: 1300, count: 3});
 
         this.startAndEndItem();
-        expect(this.getRate()).toEqual({msPerItem: 1600, count: 4});
+        expect(this.getRate()).toEqual({msPerItem: 1413, count: 4});
       });
     });
   }
@@ -352,26 +352,26 @@ class StreamItemTimerTests extends StreamInfoTests{
         
         it("after second item is complete the overall rate of 5 rates should return an average of 2 rates",() => {
           this.startAndEndItem(2);
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1700, count: 2});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1175, count: 2});
         });
         
         it("after 8 items are complete the overall rate of 5 rates should return an average of 5 rates",() => {
           this.startAndEndItem();
           expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1000, count: 1});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1700, count: 2});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1175, count: 2});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 2000, count: 3});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1300, count: 3});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1600, count: 4});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1413, count: 4});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1800, count: 5});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1520, count: 5});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1800, count: 5});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1720, count: 5});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1800, count: 5});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1920, count: 5});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 1800, count: 5});
+          expect(this._streamItemsTimer.getOverallRate(5)).toEqual({msPerItem: 2130, count: 5});
         });
     });
 
@@ -412,17 +412,17 @@ class StreamItemTimerTests extends StreamInfoTests{
           this.startAndEndItem();
           expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1100, count: 2});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1300, count: 3});
+          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1200, count: 3});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1025, count: 4});
+          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1300, count: 4});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1300, count: 5});
+          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1400, count: 5});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1300, count: 5});
+          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1600, count: 5});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1300, count: 5});
+          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1800, count: 5});
           this.startAndEndItem();
-          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 1300, count: 5});
+          expect(this._streamItemsTimer.getAverageRate(5)).toEqual({msPerItem: 2010, count: 5});
         });
     });
 

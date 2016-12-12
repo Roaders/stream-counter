@@ -143,7 +143,7 @@ export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
 
   public getAverageRate(count?: number): IRate | null{
     const completeItems = this.getCompleteItems()
-        .slice(0,count);
+        .slice(-count);
 
     if(completeItems.length === 0){
       return null;
@@ -159,7 +159,7 @@ export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
 
   public getOverallRate(count?: number): IRate | null{
     const completeItems = this.getCompleteItems()
-        .slice(0,count);
+        .slice(-count);
 
     if(completeItems.length === 0){
       return null;
