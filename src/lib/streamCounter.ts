@@ -38,7 +38,12 @@ interface ITimedItem{
 
 export abstract class StreamInfo implements IStreamInfo{
  
-  constructor(protected _timer: ITimer, protected _progressCallback?: () => void){
+  constructor(protected _progressCallback?: () => void, protected _timer?: ITimer){
+    if(!this._timer){
+      this._timer = {
+        getTime: () => new Date().getTime()
+      }
+    }
   }
 
   //  Private Variables
@@ -81,7 +86,7 @@ export abstract class StreamInfo implements IStreamInfo{
 
   protected itemStart(){
     if(isNaN(this._startTime)){
-      this._startTime = this._timer.getTime();
+      this._startTime = this._timer!.getTime();
     }
 
     this._inProgres++;
@@ -89,7 +94,7 @@ export abstract class StreamInfo implements IStreamInfo{
   }
 
   protected itemEnd(){
-    this._lastComplete = this._timer.getTime();
+    this._lastComplete = this._timer!.getTime();
 
     this._inProgres--;
     this._complete++;
@@ -104,8 +109,8 @@ export abstract class StreamInfo implements IStreamInfo{
 
 export class StreamCounter extends StreamInfo implements IStreamCounter{
 
-  constructor(timer: ITimer, progressCallback?: () => void){
-    super(timer, progressCallback)
+  constructor(progressCallback?: () => void, timer?: ITimer){
+    super(progressCallback, timer)
   }
 
   public newItem(){
@@ -121,8 +126,8 @@ export class StreamCounter extends StreamInfo implements IStreamCounter{
 
 export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
  
-  constructor(timer: ITimer, progressCallback?: () => void){
-    super(timer, progressCallback)
+  constructor(progressCallback?: () => void, timer?: ITimer){
+    super(progressCallback, timer)
   }
 
   private _items: ITimedItem[] = [];
@@ -133,7 +138,7 @@ export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
     this.itemStart();
     this.reportProgress();
 
-    const now = this._timer.getTime();
+    const now = this._timer!.getTime();
     this._items.push({startTime: now});
 
     return { stop: () => {
@@ -193,7 +198,7 @@ export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
       .filter(item => item.startTime === startTime && item.endTime === undefined);
 
     if(matchingItems.length > 0){
-      const now = this._timer.getTime();
+      const now = this._timer!.getTime();
       matchingItems[0].endTime = now;
       matchingItems[0].elapsed = now - matchingItems[0].startTime;
     }

@@ -268,7 +268,7 @@ class StreamCounterTests extends StreamInfoTests{
   private _streamCounter: IStreamCounter
 
   protected createSystem(timer: ITimer, progressFunction: () => void): IStreamInfo{
-    this._streamCounter = new StreamCounter(timer, progressFunction);
+    this._streamCounter = new StreamCounter(progressFunction, timer);
     return this._streamCounter;
   }
 
@@ -304,7 +304,7 @@ class StreamItemTimerTests extends StreamInfoTests{
 
   protected createSystem(timer: ITimer, progressFunction: () => void): IStreamInfo{
     this._timers = [];
-    this._streamItemsTimer = new StreamItemsTimer(timer, progressFunction);
+    this._streamItemsTimer = new StreamItemsTimer(progressFunction, timer);
     return this._streamItemsTimer;
   }
 
