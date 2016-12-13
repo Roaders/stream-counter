@@ -10,16 +10,22 @@ export interface IStreamInfo{
   readonly complete: number;
 }
 
-export interface IStreamCounter extends IStreamInfo{
-  newItem();
-  itemComplete();
+export interface IStreamCounterInfo extends IStreamInfo{
   readonly rate: IRate | null;
 }
 
-export interface IStreamItemTimer extends IStreamInfo{
-  startItemTimer(): IItemTimer;
+export interface IStreamItemTimerInfo extends IStreamInfo{
   getAverageRate(count?: number): IRate | null;
   getOverallRate(count?: number): IRate | null; 
+}
+
+export interface IStreamCounter extends IStreamCounterInfo{
+  newItem();
+  itemComplete();
+}
+
+export interface IStreamItemTimer extends IStreamItemTimerInfo{
+  startItemTimer(): IItemTimer;
 }
 
 export interface IItemTimer{
