@@ -9,7 +9,9 @@
     "build": "tsc",
     "pretest": "npm run build",
     "test": "jasmine",
-    "prepublish": "typings install"
+    "prepublish": "typings install",
+    "prestart": "npm run build",
+    "start": "node example/fileResizeExample.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   "homepage": "https://github.com/Roaders/stream-counter#readme",
   "devDependencies": {
     "jasmine": "^2.5.2",
+    "rx": "^4.1.0",
     "typescript": "^2.1.4",
     "typings": "^2.0.0"
   }
