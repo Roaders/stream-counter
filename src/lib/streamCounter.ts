@@ -16,7 +16,7 @@ export interface IStreamCounter extends IStreamInfo{
   readonly rate: IRate | null;
 }
 
-export interface IStreamItemsTimer extends IStreamInfo{
+export interface IStreamItemTimer extends IStreamInfo{
   startItemTimer(): IItemTimer;
   getAverageRate(count?: number): IRate | null;
   getOverallRate(count?: number): IRate | null; 
@@ -124,7 +124,7 @@ export class StreamCounter extends StreamInfo implements IStreamCounter{
   }
 }
 
-export class StreamItemsTimer extends StreamInfo implements IStreamItemsTimer{
+export class StreamItemTimer extends StreamInfo implements IStreamItemTimer{
  
   constructor(progressCallback?: () => void, timer?: ITimer){
     super(progressCallback, timer)

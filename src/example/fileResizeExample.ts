@@ -1,12 +1,12 @@
 
 import * as Rx from "rx";
 
-import {StreamCounter, StreamItemsTimer} from "../lib/streamCounter"
+import {StreamCounter, StreamItemTimer} from "../lib/streamCounter"
 
 const overallCounter = new StreamCounter(reportProgress);
-const loadTimer = new StreamItemsTimer(reportProgress);
+const loadTimer = new StreamItemTimer(reportProgress);
 const waitingForResizeCounter = new StreamCounter(reportProgress);
-const resizeTimer = new StreamItemsTimer(reportProgress);
+const resizeTimer = new StreamItemTimer(reportProgress);
 
 var lastMessageLength: number = 0;
 
