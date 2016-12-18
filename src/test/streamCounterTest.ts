@@ -230,13 +230,13 @@ abstract class StreamInfoTests{
   protected testRate(){
     describe("rate", () => {
       
-      it("Should intially return null",() => {
-        expect(this.getRate()).toEqual(null);
+      it("Should intially return zero rate",() => {
+        expect(this.getRate()).toEqual({msPerItem: NaN, count: 0});
       });
       
-      it("after first item it should return null",() => {
+      it("after first item starts it should return zero rate",() => {
         this.newItem();
-        expect(this.getRate()).toEqual(null);
+        expect(this.getRate()).toEqual({msPerItem: NaN, count: 0});
       });
       
       it("after first item is complete it should return a valid rate",() => {
@@ -331,13 +331,13 @@ class StreamItemTimerTests extends StreamInfoTests{
   protected testRates() {
     describe("overall rate",() => {
       
-        it("Should intially return null",() => {
-          expect(this._streamItemTimer.getOverallRate()).toEqual(null);
+        it("Should intially return zero rate",() => {
+          expect(this._streamItemTimer.getOverallRate()).toEqual({msPerItem: NaN, count: 0});
         });
         
-        it("after first item it should return null",() => {
+        it("after first item it should return zero rate",() => {
           this.newItem();
-          expect(this._streamItemTimer.getOverallRate()).toEqual(null);
+          expect(this._streamItemTimer.getOverallRate()).toEqual({msPerItem: NaN, count: 0});
         });
         
         it("after first item is complete overallRate should return correct rate",() => {
@@ -377,13 +377,13 @@ class StreamItemTimerTests extends StreamInfoTests{
 
     describe("average rate",() => {
       
-        it("Should intially return null",() => {
-          expect(this._streamItemTimer.getAverageRate()).toEqual(null);
+        it("Should intially return zero rate",() => {
+          expect(this._streamItemTimer.getAverageRate()).toEqual({msPerItem: NaN, count: 0});
         });
         
-        it("after first item it should return null",() => {
+        it("after first item it should return zero rate",() => {
           this.newItem();
-          expect(this._streamItemTimer.getAverageRate()).toEqual(null);
+          expect(this._streamItemTimer.getAverageRate()).toEqual({msPerItem: NaN, count: 0});
         });
         
         it("after first item is complete overallRate should return correct rate",() => {

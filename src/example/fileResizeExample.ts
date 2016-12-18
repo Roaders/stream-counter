@@ -11,18 +11,15 @@ const resizeTimer = new StreamItemTimer(reportProgress);
 var lastMessageLength: number = 0;
 
 function reportProgress(carriageReturn:boolean = true){
-    const overallRate = overallCounter.rate ? Math.round(overallCounter.rate.msPerItem) : 0;
 
     const overallLoadRate = loadTimer.getOverallRate(5);
-    const loadRate = overallLoadRate ? Math.round(overallLoadRate.msPerItem) : 0;
     
     const overallResizeRate = resizeTimer.getOverallRate(5);
-    const resizeRate = overallResizeRate ? Math.round(overallResizeRate.msPerItem) : 0;
 
-    let message = `${overallCounter.complete}/${overallCounter.total} (${overallRate}ms/item) Items Complete;`;
-    message += ` ${loadTimer.inProgress} images loading (last 5 ${loadRate}ms/item);`
+    let message = `${overallCounter.complete}/${overallCounter.total} (${overallCounter.rate.msPerItem}ms/item) Items Complete;`;
+    message += ` ${loadTimer.inProgress} images loading (last ${overallLoadRate.count} ${overallLoadRate.msPerItem}ms/item);`
     message += ` ${waitingForResizeCounter.inProgress} images waiting to resize;`
-    message += ` ${resizeTimer.inProgress} images resizing (last 5 ${resizeRate}ms/item);`
+    message += ` ${resizeTimer.inProgress} images resizing (last ${overallResizeRate.count} ${overallResizeRate.msPerItem}ms/item);`
 
     if(carriageReturn){
         if(lastMessageLength > message.length && (<any>process.stdout).clearLine){

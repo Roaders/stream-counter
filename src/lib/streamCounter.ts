@@ -11,12 +11,12 @@ export interface IStreamInfo{
 }
 
 export interface IStreamCounterInfo extends IStreamInfo{
-  readonly rate: IRate | null;
+  readonly rate: IRate;
 }
 
 export interface IStreamItemTimerInfo extends IStreamInfo{
-  getAverageRate(count?: number): IRate | null;
-  getOverallRate(count?: number): IRate | null; 
+  getAverageRate(count?: number): IRate;
+  getOverallRate(count?: number): IRate; 
 }
 
 export interface IStreamCounter extends IStreamCounterInfo{
@@ -52,11 +52,6 @@ export abstract class StreamInfo implements IStreamInfo{
     }
   }
 
-  //  Private Variables
-
-  private _startTime: number;
-  private _lastComplete: number;
-
   //  Properties
 
   private _inProgres: number = 0;
@@ -77,31 +72,14 @@ export abstract class StreamInfo implements IStreamInfo{
     return this._complete;
   }
 
-  public get rate(): IRate | null {
-    if(isNaN(this._lastComplete) || isNaN(this._startTime)){
-      return null;
-    }
-
-    const elapsed = this._lastComplete - this._startTime;
-    const msPerItem = elapsed/ this.complete;
-
-    return {count: this.complete, msPerItem: msPerItem};
-  }
-
   //  Protected Functions
 
   protected itemStart(){
-    if(isNaN(this._startTime)){
-      this._startTime = this._timer!.getTime();
-    }
-
     this._inProgres++;
     this._total++;
   }
 
   protected itemEnd(){
-    this._lastComplete = this._timer!.getTime();
-
     this._inProgres--;
     this._complete++;
   }
@@ -118,6 +96,43 @@ export class StreamCounter extends StreamInfo implements IStreamCounter{
   constructor(progressCallback?: () => void, timer?: ITimer){
     super(progressCallback, timer)
   }
+
+
+  //  Private Variables
+
+  private _startTime: number;
+  private _lastComplete: number;
+
+  //  Properties
+
+  public get rate(): IRate {
+    if(isNaN(this._lastComplete) || isNaN(this._startTime)){
+      return {count: 0, msPerItem: NaN};
+    }
+
+    const elapsed = this._lastComplete - this._startTime;
+    const msPerItem = elapsed/ this.complete;
+
+    return {count: this.complete, msPerItem: Math.round(msPerItem)};
+  }
+
+  //  Overridden Functions
+
+  protected itemStart(){
+    if(isNaN(this._startTime)){
+      this._startTime = this._timer!.getTime();
+    }
+
+    super.itemStart();
+  }
+
+  protected itemEnd(){
+    this._lastComplete = this._timer!.getTime();
+
+    super.itemEnd();
+  }
+
+  //  Public Functions
 
   public newItem(){
     this.itemStart();
@@ -152,12 +167,12 @@ export class StreamItemTimer extends StreamInfo implements IStreamItemTimer{
     }};
   }
 
-  public getAverageRate(count?: number): IRate | null{
+  public getAverageRate(count?: number): IRate{
     const completeItems = this.getCompleteItems()
         .slice(-count);
 
     if(completeItems.length === 0){
-      return null;
+      return {count: 0, msPerItem: NaN};
     }
 
     const elapsedTimes = completeItems.map(item => item.elapsed!);
@@ -165,22 +180,22 @@ export class StreamItemTimer extends StreamInfo implements IStreamItemTimer{
     const actualCount = completeItems.length;
     const msPerItem = total / actualCount;
     
-    return {msPerItem: msPerItem, count: actualCount};
+    return {msPerItem: Math.round(msPerItem), count: actualCount};
   }
 
-  public getOverallRate(count?: number): IRate | null{
+  public getOverallRate(count?: number): IRate{
     const completeItems = this.getCompleteItems()
         .slice(-count);
 
     if(completeItems.length === 0){
-      return null;
+      return {count: 0, msPerItem: NaN};
     }
 
     const elapsed = completeItems[completeItems.length-1].endTime - completeItems[0].startTime;
     const actualCount = completeItems.length;
     const msPerItem = elapsed / actualCount;
     
-    return {msPerItem: msPerItem, count: actualCount};
+    return {msPerItem: Math.round(msPerItem), count: actualCount};
   }
 
   //  Private Functions
