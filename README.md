@@ -1,6 +1,7 @@
-[![Build Status](https://travis-ci.org/Roaders/stream-counter.svg?branch=master)](https://travis-ci.org/Roaders/stream-counter)
-
 # stream-item-timer
+
+[![Known Vulnerabilities](https://snyk.io/test/github/roaders/stream-item-timer/badge.svg)](https://snyk.io/test/github/roaders/stream-item-timer)
+
 A library to track performance metrics for processing streams
 
 ## Installation
