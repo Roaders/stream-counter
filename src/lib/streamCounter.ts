@@ -42,6 +42,12 @@ interface ITimedItem{
   elapsed?: number;
 }
 
+interface ICompleteItem{
+  startTime: number;
+  endTime: number;
+  elapsed: number;
+}
+
 export abstract class StreamInfo implements IStreamInfo{
  
   constructor(protected _progressCallback?: () => void, protected _timer?: ITimer){
@@ -167,7 +173,7 @@ export class StreamItemTimer extends StreamInfo implements IStreamItemTimer{
     }};
   }
 
-  public getAverageRate(count?: number): IRate{
+  public getAverageRate(count: number = 0): IRate{
     const completeItems = this.getCompleteItems()
         .slice(-count);
 
@@ -183,7 +189,7 @@ export class StreamItemTimer extends StreamInfo implements IStreamItemTimer{
     return {msPerItem: Math.round(msPerItem), count: actualCount};
   }
 
-  public getOverallRate(count?: number): IRate{
+  public getOverallRate(count: number = 0): IRate{
     const completeItems = this.getCompleteItems()
         .slice(-count);
 
@@ -225,8 +231,9 @@ export class StreamItemTimer extends StreamInfo implements IStreamItemTimer{
     }
   }
 
-  private getCompleteItems(): ITimedItem[]{
+  private getCompleteItems(): ICompleteItem[]{
     return this._items
-      .filter(item => item.endTime != null && item.elapsed != null);
+      .filter(item => item.endTime != null && item.elapsed != null)
+      .map(item => item as ICompleteItem);
   }
 }

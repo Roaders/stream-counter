@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/Roaders/stream-counter#readme",
   "devDependencies": {
-    "jasmine": "^2.5.2",
-    "rx": "^4.1.0",
-    "typescript": "^2.2.2",
-    "typings": "^2.0.0"
+    "jasmine": "2.5.2",
+    "rx": "4.1.0",
+    "typescript": "2.2.2",
+    "typings": "2.0.0"
   }
 }
