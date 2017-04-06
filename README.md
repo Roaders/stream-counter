@@ -2,6 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/Roaders/stream-item-timer.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io/test/github/roaders/stream-item-timer/badge.svg)](https://snyk.io/test/github/roaders/stream-item-timer)
+[![Build Status](https://travis-ci.org/Roaders/stream-item-timer.svg?branch=master)](https://travis-ci.org/Roaders/stream-item-timer)
 
 A library to track performance metrics for processing streams
 
