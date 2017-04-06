@@ -9,7 +9,8 @@
     "build": "tsc",
     "pretest": "npm run build",
     "test": "jasmine",
-    "prepublish": "typings install",
+    "push": "git push origin && git push origin --tags",
+    "prepublish": "typings install && npm run build",
     "prestart": "npm run build",
     "start": "node example/fileResizeExample.js"
   },
