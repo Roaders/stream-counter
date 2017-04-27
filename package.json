@@ -32,7 +32,7 @@
   "devDependencies": {
     "jasmine": "2.5.2",
     "rx": "4.1.0",
-    "typescript": "2.2.2",
+    "typescript": "2.3.1",
     "typings": "2.1.1"
   }
 }
