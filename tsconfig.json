@@ -6,13 +6,10 @@
         "sourceMap": true,
         "outDir": "",
         "declaration": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "skipLibCheck": true
     },
     "include": [
         "src/**/*.ts"
-    ],
-    "files": [
-        "typings/index.d.ts",
-        "node_modules/rx/ts/rx.all.d.ts"
     ]
 }
