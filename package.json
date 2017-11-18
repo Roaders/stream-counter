@@ -5,12 +5,10 @@
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
-    "typings": "typings install",
     "build": "tsc",
     "pretest": "npm run build",
     "test": "jasmine",
     "push": "git push origin && git push origin --tags",
-    "prepublish": "typings install && npm run build",
     "prestart": "npm run build",
     "start": "node example/fileResizeExample.js"
   },
@@ -31,8 +29,11 @@
   "homepage": "https://github.com/Roaders/stream-counter#readme",
   "devDependencies": {
     "jasmine": "2.8.0",
-    "rx": "4.1.0",
-    "typescript": "2.2.2",
-    "typings": "2.1.1"
+    "typescript": "^2.6.1",
+    "@types/jasmine": "^2.8.2",
+    "@types/node": "^8.0.53"
+  },
+  "dependencies": {
+    "rxjs": "^5.5.2"
   }
 }

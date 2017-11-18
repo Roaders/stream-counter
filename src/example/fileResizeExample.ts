@@ -1,5 +1,5 @@
 
-import * as Rx from "rx";
+import {Observable} from "rxjs";
 
 import {StreamCounter, StreamItemTimer} from "../lib/streamCounter"
 
@@ -39,38 +39,38 @@ function renameImage(imageName: string,size: string): string{
     return imageName.replace(".jpg","_" + size + ".jpg")
 }
 
-function loadImage(imagePath: string): Rx.Observable<string>{
-    return Rx.Observable.defer(() => {
+function loadImage(imagePath: string): Observable<string>{
+    return Observable.defer(() => {
         const timer = loadTimer.startItemTimer();
         const delay = (Math.random()*500) + 500;
 
-        return Rx.Observable.interval(delay)
+        return Observable.interval(delay)
             .take(1)
             .do(() => timer.stop())
             .map(() => imagePath);
     });
 }
 
-function resizeImage(imagePath: string, maxDimensions: number): Rx.Observable<string>{
-    return Rx.Observable.defer(() => {
+function resizeImage(imagePath: string, maxDimensions: number): Observable<string>{
+    return Observable.defer(() => {
         const timer = resizeTimer.startItemTimer();
         waitingForResizeCounter.itemComplete();
         const delay = (Math.random()*750) + 250;
 
-        return Rx.Observable.interval(delay)
+        return Observable.interval(delay)
             .take(1)
             .do(() => timer.stop())
             .map(() => imagePath);
     });
 }
 
-const imagePipeline = Rx.Observable.range(0,100)
+const imagePipeline = Observable.range(0,100)
     .do(() => overallCounter.newItem())
     .map(imageNumber => `Image_${imageNumber}.jpg`)
     .map(imagePath => loadImage(imagePath))
-    .merge(3)
+    .mergeAll(3)
     .flatMap(imagePath => {
-        return Rx.Observable.from([
+        return Observable.from([
             {path: renameImage(imagePath,"small"), size: 500},
             {path: renameImage(imagePath,"medium"), size: 2000},
             {path: renameImage(imagePath,"large"), size: 4000}
@@ -79,7 +79,7 @@ const imagePipeline = Rx.Observable.range(0,100)
     .map(dimensionImage => resizeImage(dimensionImage.path,dimensionImage.size))
     .do(() => waitingForResizeCounter.newItem())
     .merge(8)
-    .bufferWithCount(3)
+    .bufferCount(3)
     .do(() => overallCounter.itemComplete())
 
 imagePipeline.subscribe(
