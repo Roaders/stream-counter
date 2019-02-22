@@ -31,7 +31,7 @@
     "jasmine": "2.8.0",
     "typescript": "^2.6.1",
     "@types/jasmine": "^2.8.2",
-    "@types/node": "^8.0.53"
+    "@types/node": "^11.9.5"
   },
   "dependencies": {
     "rxjs": "^5.5.2"
